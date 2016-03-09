@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>
+		<script>
+			team_members = {
+				"azure" : ["Derek Peirce", "Hongtan Du", "Boyang Bai", "Eric Lee"],
+				"database" : ["Ayush Narayan", "Daniel Hsu", "Yun Zhou", "Meghan Doherty", "Wilson Beebe"],
+				"upload" : ["Caroline Lane", "Chaongzhang (Christopher) Li"],
+				"tools" : ["Michael Peirce", "Seth Lauer", "Nick Merritt", "Alex Lamas", "Stanley Gu"],
+				"predict" : ["Aaron Braunstein", "Marshall Wilson", "Bing Xue"],
+				"ux" : ["Jenna Netland", "Junyun Guo", "Jong-Hwi Lee", "Jieru Song"]
+			};
+
+			teams = ["azure", "database", "upload", "tools", "predict", "ux"]
+
+			Array.prototype.diff = function(a) {
+			    return this.filter(function(i) {return a.indexOf(i) < 0;});
+			};
+
+			function randomChoice(team) {
+				if (team != null) {
+					var index = Math.floor(Math.random() * team.length);
+					return(team[index]);
+				}
+				return("");
+			}
+
+			function pickCodeReviewers() {
+
+				team = document.querySelector('input[name="team"]:checked').value
+				team_reviewer = randomChoice(team_members[team])
+				other_reviewer = randomChoice(team_members[randomChoice(teams.diff(team))])
+				console.log(other_reviewer)
+				document.getElementById("reviewers").innerHTML = "Team Revier: " + team_reviewer + ", Other Team Reviewer: " + other_reviewer;
+
+			}
+		</script>
+	</head>
+
+	<body>
+		<h1> Code Reviewer Selector </h1>
+		<h3> Select what team you're on </h3>
+		<form>
+			<input type="radio" name="team" value="azure"> Azure Framework <br>
+			<input type="radio" name="team" value="database"> Database <br>
+			<input type="radio" name="team" value="upload"> Data Upload <br>
+			<input type="radio" name="team" value="tools"> Dev Tools <br>
+			<input type="radio" name="team" value="predict"> Predict and Notify <br>
+			<input type="radio" name="team" value="ux"> User Experience <br>
+		</form>
+
+		<h3> Pick a code reviewer by clicking the button below. (Click until you're not the team reviewer)</h3>
+		<input type="button" onclick="pickCodeReviewers()" value="Pick Code Reviewers!">
+		<p id="reviewers"></p>
+	</body>
+</html>
